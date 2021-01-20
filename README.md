@@ -1,2 +1,2 @@
 # kimsuhyeon
-Snake_Game 초본 생성
+Snake_Game 초본 코드 
