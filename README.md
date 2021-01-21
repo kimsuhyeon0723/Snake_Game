@@ -1,2 +1,3 @@
 # kimsuhyeon
-Snake_Game 초본 코드작성
+210120 Snake_Game 초본 코드작성
+210121 
