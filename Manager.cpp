@@ -76,8 +76,8 @@ void Manager::Play()
 		{
 			if(m_Snake.GetSnakeClock() - m_iOldClockSnake > m_iActSpeed)
 			{
-				m_Snake.EraseHead();
 				m_Snake.EraseTail();
+				m_Snake.EraseHead();
 				m_Snake.Move();					
 				if (PointUp(m_Snake, m_Block) == true)
 					m_Snake.MakeTail();					

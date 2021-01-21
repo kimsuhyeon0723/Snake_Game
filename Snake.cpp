@@ -16,60 +16,13 @@ Snake::Snake()
 void Snake::MakeTail()
 {
 	Tail t;
-	int tmpx = m_SnakeHead.x;
-	int tmpy = m_SnakeHead.y;
 	if (m_SnakeTail.empty())
 	{
-		if (m_SnakeHead.direction == DIRECTION_LEFT)
-		{
-			t.x = ++tmpx;
-			t.y = tmpy;
-
-		}
-		else if (m_SnakeHead.direction == DIRECTION_RIGHT)
-		{
-			t.x = --tmpx;
-			t.y = tmpy;
-		}
-		else if (m_SnakeHead.direction == DIRECTION_UP)
-		{
-			t.x = tmpx;
-			t.y = ++tmpy;
-		}
-		else if (m_SnakeHead.direction == DIRECTION_DOWN)
-		{
-			t.x = tmpx;
-			t.y = --tmpy;
-		}
-		t.direction = m_SnakeHead.direction;
+		MakingConditions(t, m_SnakeHead);		
 	}
 	else
 	{
-		auto iter = m_SnakeTail.back();
-		tmpx = iter.x;
-		tmpy = iter.y;
-		if (iter.direction == DIRECTION_LEFT)
-		{
-			t.x = ++tmpx;
-			t.y = tmpy;
-		}
-		else if (iter.direction == DIRECTION_RIGHT)
-		{
-			t.x = --tmpx;
-			t.y = tmpy;
-		}
-		else if (iter.direction == DIRECTION_UP)
-		{
-			t.x = tmpx;
-			t.y = ++tmpy;
-		}
-		else if (iter.direction == DIRECTION_DOWN)
-		{
-			t.x = tmpx;
-			t.y = --tmpy;
-			
-		}
-		t.direction = iter.direction;
+		MakingConditions(t, m_SnakeTail.back());
 	}	
 	m_SnakeTail.push_back(t);
 }
@@ -169,12 +122,16 @@ void Snake::DrawHead()
 }
 
 void Snake::DrawTail()
-{
-	for (auto iter = m_SnakeTail.begin(); iter != m_SnakeTail.end(); iter++)
+{	
+	if (!m_SnakeTail.empty())
 	{
-		m_Draw.DrawPoint(iter->x, iter->y, iter->tailImage);
+		for (auto iter = m_SnakeTail.begin(); iter != m_SnakeTail.end(); iter++)
+		{
+			m_Draw.DrawPoint(iter->x, iter->y, iter->tailImage);
+		}
 	}
 }
+	
 
 void Snake::EraseHead()
 {
@@ -185,14 +142,11 @@ void Snake::EraseTail()
 {
 	if (!m_SnakeTail.empty())
 	{
-		for (auto iter = m_SnakeTail.begin(); iter != m_SnakeTail.end(); iter++)
-		{
-			m_Draw.DrawPoint(iter->x, iter->y, "  ");
-		}
+		m_Draw.DrawPoint(m_SnakeTail.back().x, m_SnakeTail.back().y, "  ");
 	}	
 }
 
-void Snake::SnakeCollision()
+void Snake::SnakeCollision()//뱀 장외, 자신 충돌
 {
 	if (m_SnakeHead.x == 0 || m_SnakeHead.y == 0 || m_SnakeHead.x == m_iMovableWidth - 1 || m_SnakeHead.y == m_iMovableHeight - 1)
 	{
@@ -228,4 +182,59 @@ void Snake::SnakeReset()
 	m_SnakeHead.x = m_iMovableWidth / 2;
 	m_SnakeHead.y = m_iMovableHeight / 2;
 	m_bCollision = false;
+}
+
+void Snake::MakingConditions(Tail& t, Head h)//생성위치에 대한 조건 //t는 만들것을 받고, h는 t를 위한 정보제공
+{
+	if (h.direction == DIRECTION_LEFT)
+	{
+		t.x = ++h.x;
+		t.y = h.y;
+	}
+	else if (h.direction == DIRECTION_RIGHT)
+	{
+		t.x = --h.x;
+		t.y = h.y;
+	}
+	else if (h.direction == DIRECTION_UP)
+	{
+		t.x = h.x;
+		t.y = ++h.y;
+	}
+	else if (h.direction == DIRECTION_DOWN)
+	{
+		t.x = h.x;
+		t.y = --h.y;
+	}
+	t.direction = h.direction;
+}
+
+void Snake::MakingConditions(Tail& t, Tail back)//t는 만들것, h는 t를 위한 정보제공
+{
+	if (back.direction == DIRECTION_LEFT)
+	{
+		t.x = ++back.x;
+		t.y = back.y;
+	}
+	else if (back.direction == DIRECTION_RIGHT)
+	{
+		t.x = --back.x;
+		t.y = back.y;
+	}
+	else if (back.direction == DIRECTION_UP)
+	{
+		t.x = back.x;
+		t.y = ++back.y;
+	}
+	else if (back.direction == DIRECTION_DOWN)
+	{
+		t.x = back.x;
+		t.y = --back.y;
+	}
+	t.direction = back.direction;
+}
+
+void Snake::MovingConditions(Tail & t, Head h)
+{
+	//if
 }

@@ -54,5 +54,7 @@ public:
 	bool CheckCollision();
 	void ClearTail();
 	void SnakeReset();
+	void MakingConditions(Tail& t, Head h);
+	void MakingConditions(Tail& t, Tail back);
+	void MovingConditions(Tail& t, Head h);
 };
-

@@ -17,6 +17,11 @@ void Block::MakeWall()
 	{
 		w[i].x = rand() % (MAPSIZE_WIDTH - 2) + 1; //1~49
 		w[i].y = rand() % (MAPSIZE_HEIGHT - 2) + 1; //1~29
+		while(w[i].x == MAPSIZE_WIDTH / 2 && w[i].y == MAPSIZE_HEIGHT)
+		{
+			w[i].x = rand() % (MAPSIZE_WIDTH - 2) + 1; //1~49
+			w[i].y = rand() % (MAPSIZE_HEIGHT - 2) + 1; //1~29
+		}
 		m_Wall.push_back(w[i]);
 	}		
 }
